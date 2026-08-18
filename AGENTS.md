@@ -3,6 +3,12 @@
 ## ⚠️ READ THIS FIRST — DO NOT re-explore the codebase or re-run setup
 Everything is already built and running. Just read this file and continue.
 
+## GitHub Repository
+- Repo: https://github.com/Issamonge/proconnect-hub
+- Clone: `git clone https://github.com/Issamonge/proconnect-hub.git`
+- This repo contains all scripts, code, and documentation.
+- Data files (business lists, leads, deals) are in .gitignore — they live in the workspace only.
+
 ## Current State (as of 2026-08-17)
 
 ### System is FULLY OPERATIONAL. All services running. Do NOT restart unless dead.
