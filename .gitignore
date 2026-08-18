@@ -1,0 +1,21 @@
+# Environment file - contains secrets, never commit this
+.env
+
+# Data files
+data/
+*.db
+*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Ngrok
+ngrok*

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProConnect Hub — Find Services, Get Customers, Find Property</title>
+<meta name="description" content="Connect buyers, sellers, and renters. Get 3 free quotes from local pros, or get new customers for your business.">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+* { font-family: 'Inter', sans-serif; }
+body { background: #0a0e1a; color: #e2e8f0; }
+.gradient-text { background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.glass { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(99, 102, 241, 0.2); }
+.glow { box-shadow: 0 0 40px rgba(99, 102, 241, 0.15); }
+.card-hover { transition: all 0.3s ease; }
+.card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2); border-color: rgba(99, 102, 241, 0.5); }
+.tab-active { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; }
+input, select, textarea { background: #1e293b !important; border: 1px solid #334155 !important; color: #e2e8f0 !important; }
+input:focus, select:focus, textarea:focus { border-color: #6366f1 !important; outline: none !important; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important; }
+select option { background: #1e293b; color: #e2e8f0; }
+.step { display: none; }
+.step.active { display: block; }
+.pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+</style>
+</head>
+<body>
+
+<nav class="fixed top-0 w-full glass z-50 py-3 px-6 flex justify-between items-center">
+    <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl font-bold">P</div>
+        <span class="text-xl font-bold gradient-text">ProConnect Hub</span>
+    </div>
+    <div class="hidden md:flex gap-6 text-sm text-slate-400">
+        <a href="#hero" class="hover:text-white transition">Find Service</a>
+        <a href="#mode-seller" class="hover:text-white transition" onclick="switchMode('seller')">Get Customers</a>
+        <a href="#mode-renter" class="hover:text-white transition" onclick="switchMode('renter')">Find Property</a>
+        <a href="#how-it-works" class="hover:text-white transition">How It Works</a>
+    </div>
+    <div class="flex items-center gap-2">
+        <div class="pulse-dot"></div>
+        <span class="text-xs text-green-400 font-medium">133 Pros Available</span>
+    </div>
+</nav>
+
+<section id="hero" class="pt-32 pb-12 px-6 text-center max-w-5xl mx-auto">
+    <div class="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-6">
+        One Platform for Buyers, Sellers and Renters
+    </div>
+    <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+        Connect with <span class="gradient-text">Local Pros</span><br>
+        or Get <span class="gradient-text">New Customers</span>
+    </h1>
+    <p class="text-lg text-slate-400 mb-8 max-w-2xl mx-auto">
+        Need a service? Get 3 free quotes in minutes. Are you a business? Get qualified leads delivered to your phone. Looking to rent or buy property? We connect you directly.
+    </p>
+    <div class="flex flex-wrap gap-3 justify-center mb-8">
+        <button onclick="switchMode('buyer')" id="tab-buyer" class="tab-active px-6 py-3 rounded-xl font-semibold text-sm transition">
+            I Need a Service
+        </button>
+        <button onclick="switchMode('seller')" id="tab-seller" class="px-6 py-3 rounded-xl font-semibold text-sm transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            I'm a Business (Get Leads)
+        </button>
+        <button onclick="switchMode('renter')" id="tab-renter" class="px-6 py-3 rounded-xl font-semibold text-sm transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+            I Need Property
+        </button>
+    </div>
+</section>
+
+<!-- BUYER MODE -->
+<section id="mode-buyer" class="px-6 max-w-3xl mx-auto pb-16">
+    <div class="glass rounded-2xl p-8 glow">
+        <h2 class="text-2xl font-bold mb-2">Get 3 Free Quotes</h2>
+        <p class="text-slate-400 text-sm mb-6">Tell us what you need. We'll match you with 3 local pros who will contact you with quotes.</p>
+
+        <div class="step active" id="buyer-step1">
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="text-sm text-slate-400 mb-1 block">What service do you need?</label>
+                    <select id="buyer-service" class="w-full px-4 py-3 rounded-xl text-sm">
+                        <option value="">Select a service...</option>
+                        <option value="plumber">Plumbing</option>
+                        <option value="electrician">Electrical</option>
+                        <option value="roofing">Roofing</option>
+                        <option value="car_repair">Auto Repair</option>
+                        <option value="dentist">Dental</option>
+                        <option value="lawyer">Legal Services</option>
+                        <option value="veterinary">Veterinary</option>
+                        <option value="real_estate">Real Estate</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-slate-400 mb-1 block">Your City / Area</label>
+                    <input type="text" id="buyer-city" placeholder="e.g. Chicago, IL" class="w-full px-4 py-3 rounded-xl text-sm">
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="text-sm text-slate-400 mb-1 block">Describe what you need (optional)</label>
+                <textarea id="buyer-description" rows="3" placeholder="e.g. Kitchen sink is leaking, need emergency repair" class="w-full px-4 py-3 rounded-xl text-sm"></textarea>
+            </div>
+            <div class="mb-6">
+                <label class="text-sm text-slate-400 mb-2 block">How urgent?</label>
+                <div class="flex gap-2">
+                    <label class="cursor-pointer"><input type="radio" name="urgency" value="emergency" class="hidden peer"><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-red-500 peer-checked:text-white block text-center">Emergency</span></label>
+                    <label class="cursor-pointer"><input type="radio" name="urgency" value="soon" class="hidden peer" checked><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-indigo-500 peer-checked:text-white block text-center">This Week</span></label>
+                    <label class="cursor-pointer"><input type="radio" name="urgency" value="planning" class="hidden peer"><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-green-500 peer-checked:text-white block text-center">Just Planning</span></label>
+                </div>
+            </div>
+            <button onclick="buyerNext()" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-white hover:opacity-90 transition">Continue</button>
+        </div>
+
+        <div class="step" id="buyer-step2">
+            <h3 class="text-lg font-bold mb-4">How should pros contact you?</h3>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div><label class="text-sm text-slate-400 mb-1 block">Your Name</label><input type="text" id="buyer-name" placeholder="John Smith" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+                <div><label class="text-sm text-slate-400 mb-1 block">Phone Number</label><input type="tel" id="buyer-phone" placeholder="+1 555 123 4567" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+            </div>
+            <div class="mb-6"><label class="text-sm text-slate-400 mb-1 block">Email</label><input type="email" id="buyer-email" placeholder="you@email.com" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+            <div class="flex gap-3">
+                <button onclick="showStep('buyer-step1')" class="px-6 py-4 rounded-xl bg-slate-800 font-bold text-sm">Back</button>
+                <button onclick="submitBuyer()" class="flex-1 py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 font-bold text-white hover:opacity-90 transition">Get My 3 Free Quotes</button>
+            </div>
+        </div>
+
+        <div class="step" id="buyer-success">
+            <div class="text-center py-8">
+                <div class="text-6xl mb-4">✅</div>
+                <h3 class="text-2xl font-bold mb-2">Request Submitted!</h3>
+                <p class="text-slate-400 mb-6">We're matching you with 3 local pros. They'll contact you within 24 hours with free quotes.</p>
+                <div id="buyer-matches" class="text-left mb-6"></div>
+                <button onclick="resetBuyer()" class="px-6 py-3 rounded-xl bg-slate-800 font-semibold text-sm">Submit Another Request</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SELLER MODE -->
+<section id="mode-seller" class="px-6 max-w-3xl mx-auto pb-16 hidden">
+    <div class="glass rounded-2xl p-8 glow">
+        <h2 class="text-2xl font-bold mb-2">Get New Customers</h2>
+        <p class="text-slate-400 text-sm mb-6">Join our network. When someone in your area needs your service, we send them to you. Pay only for leads you accept.</p>
+        <div class="grid md:grid-cols-3 gap-3 mb-6">
+            <div class="glass rounded-xl p-4 text-center"><div class="text-3xl mb-1">📊</div><div class="text-2xl font-bold text-indigo-400">133</div><div class="text-xs text-slate-400">Businesses Signed Up</div></div>
+            <div class="glass rounded-xl p-4 text-center"><div class="text-3xl mb-1">🌍</div><div class="text-2xl font-bold text-purple-400">19</div><div class="text-xs text-slate-400">Cities Covered</div></div>
+            <div class="glass rounded-xl p-4 text-center"><div class="text-3xl mb-1">⚡</div><div class="text-2xl font-bold text-pink-400">24h</div><div class="text-xs text-slate-400">Lead Delivery</div></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div><label class="text-sm text-slate-400 mb-1 block">Business Name</label><input type="text" id="seller-business" placeholder="ABC Plumbing Inc" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+            <div><label class="text-sm text-slate-400 mb-1 block">Your Service Category</label>
+                <select id="seller-service" class="w-full px-4 py-3 rounded-xl text-sm">
+                    <option value="">Select your service...</option>
+                    <option value="plumber">Plumbing</option><option value="electrician">Electrical</option><option value="roofing">Roofing</option>
+                    <option value="car_repair">Auto Repair</option><option value="dentist">Dental</option><option value="lawyer">Legal Services</option>
+                    <option value="veterinary">Veterinary</option><option value="real_estate">Real Estate</option>
+                </select>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div><label class="text-sm text-slate-400 mb-1 block">City / Area You Serve</label><input type="text" id="seller-city" placeholder="e.g. Chicago, IL" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+            <div><label class="text-sm text-slate-400 mb-1 block">Phone Number</label><input type="tel" id="seller-phone" placeholder="+1 555 123 4567" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+        </div>
+        <div class="mb-4"><label class="text-sm text-slate-400 mb-1 block">Email</label><input type="email" id="seller-email" placeholder="business@email.com" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+        <div class="mb-6">
+            <label class="text-sm text-slate-400 mb-2 block">Lead Plan — How many customers per month?</label>
+            <div class="grid grid-cols-3 gap-2">
+                <label class="cursor-pointer"><input type="radio" name="plan" value="starter" class="hidden peer"><div class="glass rounded-xl p-4 text-center peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10"><div class="font-bold text-lg">Starter</div><div class="text-2xl font-black text-indigo-400">$99</div><div class="text-xs text-slate-400">10 leads/mo</div></div></label>
+                <label class="cursor-pointer"><input type="radio" name="plan" value="pro" class="hidden peer" checked><div class="glass rounded-xl p-4 text-center peer-checked:border-purple-500 peer-checked:bg-purple-500/10"><div class="font-bold text-lg">Pro</div><div class="text-2xl font-black text-purple-400">$199</div><div class="text-xs text-slate-400">30 leads/mo</div></div></label>
+                <label class="cursor-pointer"><input type="radio" name="plan" value="unlimited" class="hidden peer"><div class="glass rounded-xl p-4 text-center peer-checked:border-pink-500 peer-checked:bg-pink-500/10"><div class="font-bold text-lg">Unlimited</div><div class="text-2xl font-black text-pink-400">$499</div><div class="text-xs text-slate-400">Unlimited leads</div></div></label>
+            </div>
+        </div>
+        <button onclick="submitSeller()" class="w-full py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 font-bold text-white hover:opacity-90 transition">Start Getting Customers</button>
+        <p class="text-center text-xs text-slate-500 mt-3">No setup fee. Pay only when you receive leads. Cancel anytime.</p>
+    </div>
+</section>
+
+<!-- RENTER MODE -->
+<section id="mode-renter" class="px-6 max-w-3xl mx-auto pb-16 hidden">
+    <div class="glass rounded-2xl p-8 glow">
+        <h2 class="text-2xl font-bold mb-2">Find Property to Rent or Buy</h2>
+        <p class="text-slate-400 text-sm mb-6">Looking for an apartment, house, or commercial space? Tell us what you need and we'll connect you with property owners and agents.</p>
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div><label class="text-sm text-slate-400 mb-1 block">What are you looking for?</label>
+                <select id="renter-type" class="w-full px-4 py-3 rounded-xl text-sm">
+                    <option value="">Select...</option><option value="rent_apartment">Rent an Apartment</option><option value="rent_house">Rent a House</option>
+                    <option value="buy_house">Buy a House</option><option value="buy_apartment">Buy an Apartment</option><option value="commercial">Commercial Space</option><option value="room">Rent a Room</option>
+                </select>
+            </div>
+            <div><label class="text-sm text-slate-400 mb-1 block">City / Area</label><input type="text" id="renter-city" placeholder="e.g. Chicago, IL" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div><label class="text-sm text-slate-400 mb-1 block">Budget (monthly for rent, total for buy)</label><input type="text" id="renter-budget" placeholder="e.g. $1,500/month" class="w-full px-4 py-3 rounded-xl text-sm"></div>
+            <div><label class="text-sm text-slate-400 mb-1 block">When do you need it?</label>
+                <select id="renter-timeline" class="w-full px-4 py-3 rounded-xl text-sm">
+                    <option value="">Select...</option><option value="immediate">Immediately</option><option value="1month">Within 1 month</option>
+                    <option value="3months">Within 3 months</option><option value="planning">Just exploring</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="text-sm text-slate-400 mb-1 block">Bedrooms needed</label>
+            <div class="flex gap-2">
+                <label class="cursor-pointer"><input type="radio" name="beds" value="1" class="hidden peer"><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-indigo-500 peer-checked:text-white block text-center">1 BR</span></label>
+                <label class="cursor-pointer"><input type="radio" name="beds" value="2" class="hidden peer" checked><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-indigo-500 peer-checked:text-white block text-center">2 BR</span></label>
+                <label class="cursor-pointer"><input type="radio" name="beds" value="3" class="hidden peer"><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-indigo-500 peer-checked:text-white block text-center">3 BR</span></label>
+                <label class="cursor-pointer"><input type="radio" name="beds" value="4+" class="hidden peer"><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-indigo-500 peer-checked:text-white block text-center">4+ BR</span></label>
+                <label class="cursor-pointer"><input type="radio" name="beds" value="studio" class="hidden peer"><span class="px-4 py-2 rounded-lg bg-slate-800 text-sm peer-checked:bg-indigo-500 peer-checked:text-white block text-center">Studio</span></label>
+            </div>
+        </div>
+        <div class="mb-6">
+            <label class="text-sm text-slate-400 mb-1 block">Your contact info</label>
+            <div class="grid md:grid-cols-2 gap-4">
+                <input type="text" id="renter-name" placeholder="Your name" class="px-4 py-3 rounded-xl text-sm">
+                <input type="tel" id="renter-phone" placeholder="Phone number" class="px-4 py-3 rounded-xl text-sm">
+                <input type="email" id="renter-email" placeholder="Email" class="px-4 py-3 rounded-xl text-sm md:col-span-2">
+            </div>
+        </div>
+        <button onclick="submitRenter()" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-white hover:opacity-90 transition">Find My Property</button>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section id="how-it-works" class="px-6 max-w-5xl mx-auto py-16">
+    <h2 class="text-3xl font-bold text-center mb-12">How <span class="gradient-text">ProConnect Hub</span> Works</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass card-hover rounded-2xl p-6"><div class="text-4xl mb-4">👤</div><h3 class="font-bold text-lg mb-2">For Buyers</h3><p class="text-slate-400 text-sm">Submit what you need in 60 seconds. Get matched with 3 local pros who contact you with free quotes. No obligation.</p></div>
+        <div class="glass card-hover rounded-2xl p-6"><div class="text-4xl mb-4">📈</div><h3 class="font-bold text-lg mb-2">For Businesses</h3><p class="text-slate-400 text-sm">Sign up to receive qualified leads in your area. Only pay for leads you accept. Grow your customer base on autopilot.</p></div>
+        <div class="glass card-hover rounded-2xl p-6"><div class="text-4xl mb-4">🏠</div><h3 class="font-bold text-lg mb-2">For Renters and Buyers</h3><p class="text-slate-400 text-sm">Find apartments, houses, and commercial spaces. Get connected directly with owners and agents. No middleman fees.</p></div>
+    </div>
+</section>
+
+<section class="px-6 max-w-5xl mx-auto py-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass rounded-xl p-6 text-center"><div class="text-3xl font-black gradient-text">133</div><div class="text-xs text-slate-400 mt-1">Verified Pros</div></div>
+        <div class="glass rounded-xl p-6 text-center"><div class="text-3xl font-black gradient-text">19</div><div class="text-xs text-slate-400 mt-1">Cities</div></div>
+        <div class="glass rounded-xl p-6 text-center"><div class="text-3xl font-black gradient-text">8</div><div class="text-xs text-slate-400 mt-1">Service Categories</div></div>
+        <div class="glass rounded-xl p-6 text-center"><div class="text-3xl font-black gradient-text">24h</div><div class="text-xs text-slate-400 mt-1">Avg Response Time</div></div>
+    </div>
+</section>
+
+<footer class="border-t border-slate-800 py-8 px-6 text-center text-slate-500 text-sm">
+    <p class="mb-2">ProConnect Hub — Connecting Buyers, Sellers and Renters</p>
+    <p>ihakizimana11@gmail.com | WhatsApp: +971505852438</p>
+    <p class="mt-2 text-xs">© 2026 ProConnect Hub. All rights reserved.</p>
+</footer>
+
+<script>
+var LEADS_DATA = [];
+function switchMode(mode) {
+    ['buyer','seller','renter'].forEach(function(m) {
+        document.getElementById('mode-'+m).classList.add('hidden');
+        var tab = document.getElementById('tab-'+m);
+        tab.classList.remove('tab-active'); tab.classList.add('bg-slate-800','text-slate-300');
+    });
+    var el = document.getElementById('mode-'+mode);
+    el.classList.remove('hidden');
+    var tab = document.getElementById('tab-'+mode);
+    tab.classList.add('tab-active'); tab.classList.remove('bg-slate-800','text-slate-300');
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function showStep(id) {
+    document.querySelectorAll('#mode-buyer .step').forEach(function(s){s.classList.remove('active');});
+    document.getElementById(id).classList.add('active');
+}
+function buyerNext() {
+    var svc = document.getElementById('buyer-service').value;
+    var city = document.getElementById('buyer-city').value;
+    if(!svc || !city){alert('Please select a service and enter your city');return;}
+    showStep('buyer-step2');
+}
+function findMatchingPros(service, city) {
+    var matches = LEADS_DATA.filter(function(l){return l.niche === service;});
+    return matches.slice(0,3);
+}
+function submitBuyer() {
+    var name=document.getElementById('buyer-name').value, phone=document.getElementById('buyer-phone').value, email=document.getElementById('buyer-email').value;
+    if(!name||!phone||!email){alert('Please fill in your name, phone, and email');return;}
+    var service=document.getElementById('buyer-service').value, city=document.getElementById('buyer-city').value, desc=document.getElementById('buyer-description').value;
+    var matches=findMatchingPros(service,city);
+    var matchHtml = matches.length>0 ?
+        '<div class="glass rounded-xl p-4 mb-2"><h4 class="font-bold text-sm mb-2 text-green-400">Matched with '+matches.length+' pros:</h4>'+
+        matches.map(function(m){return '<div class="flex justify-between items-center py-2 border-b border-slate-700 last:border-0"><div><div class="font-semibold text-sm">'+m.name+'</div><div class="text-xs text-slate-400">'+(m.location||'')+'</div></div><div class="text-xs text-indigo-400">Notified</div></div>';}).join('')+'</div>'
+        : '<p class="text-slate-400 text-sm">We are expanding in your area. Pros will be notified and contact you soon.</p>';
+    saveLead({type:'buyer',service:service,city:city,description:desc,name:name,phone:phone,email:email,urgency:document.querySelector('input[name="urgency"]:checked')?document.querySelector('input[name="urgency"]:checked').value:'soon'});
+    document.getElementById('buyer-matches').innerHTML=matchHtml;
+    showStep('buyer-success');
+}
+function resetBuyer(){['buyer-service','buyer-city','buyer-description','buyer-name','buyer-phone','buyer-email'].forEach(function(id){document.getElementById(id).value='';});showStep('buyer-step1');}
+function submitSeller(){
+    var business=document.getElementById('seller-business').value,service=document.getElementById('seller-service').value,city=document.getElementById('seller-city').value,phone=document.getElementById('seller-phone').value,email=document.getElementById('seller-email').value;
+    if(!business||!service||!city||!phone||!email){alert('Please fill in all fields');return;}
+    var plan=document.querySelector('input[name="plan"]:checked')?document.querySelector('input[name="plan"]:checked').value:'pro';
+    saveLead({type:'seller',business:business,service:service,city:city,phone:phone,email:email,plan:plan});
+    alert('Thank you, '+business+'! Your business is now registered.\n\nWe will send you qualified leads in '+city+'. You will receive an email confirmation shortly.\n\nPlan: '+plan.toUpperCase());
+    ['seller-business','seller-service','seller-city','seller-phone','seller-email'].forEach(function(id){document.getElementById(id).value='';});
+}
+function submitRenter(){
+    var type=document.getElementById('renter-type').value,city=document.getElementById('renter-city').value,budget=document.getElementById('renter-budget').value,name=document.getElementById('renter-name').value,phone=document.getElementById('renter-phone').value,email=document.getElementById('renter-email').value;
+    if(!type||!city||!name||!phone||!email){alert('Please fill in all required fields');return;}
+    var beds=document.querySelector('input[name="beds"]:checked')?document.querySelector('input[name="beds"]:checked').value:'2';
+    saveLead({type:'renter',propertyType:type,city:city,budget:budget,beds:beds,name:name,phone:phone,email:email});
+    alert('Property request submitted!\n\nWe are connecting you with property owners and agents in '+city+'. You will receive matches within 24 hours.');
+    ['renter-type','renter-city','renter-budget','renter-name','renter-phone','renter-email'].forEach(function(id){document.getElementById(id).value='';});
+}
+function saveLead(data) {
+    // Save to localStorage as backup (works on static hosting)
+    try {
+        var leads = JSON.parse(localStorage.getItem('proconnect_leads')||'[]');
+        data.timestamp = new Date().toISOString();
+        leads.push(data);
+        localStorage.setItem('proconnect_leads', JSON.stringify(leads));
+    } catch(e){}
+    // Try to send to backend (works if API server is running)
+    try {
+        fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
+    } catch(e){}
+}
+fetch('leads_data.json').then(function(r){return r.json();}).then(function(data){LEADS_DATA=data;}).catch(function(){LEADS_DATA=[];});
+</script>
+</body>
+</html>

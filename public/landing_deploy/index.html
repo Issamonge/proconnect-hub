@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pro Assist — Never Miss a Customer Call Again</title>
+    <meta name="description" content="24/7 AI voice assistant for your business. Answers every call, books appointments, qualifies leads. Never lose another customer to a missed call.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e27;
+            color: #e8eaf6;
+            line-height: 1.6;
+        }
+        .hero {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f4e 50%, #0a0e27 100%);
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 50%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+            -webkit-background-foreground: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        .hero p { font-size: 1.25rem; color: #a5b4fc; margin-bottom: 30px; }
+        .hero .stat {
+            display: inline-block;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin: 5px;
+            font-size: 0.95rem;
+        }
+        .hero .stat strong { color: #c084fc; }
+        .problem { padding: 60px 20px; text-align: center; max-width: 700px; margin: 0 auto; }
+        .problem h2 { font-size: 1.8rem; margin-bottom: 25px; color: #f87171; }
+        .problem .loss {
+            background: rgba(248,113,113,0.1);
+            border-left: 4px solid #f87171;
+            padding: 25px; border-radius: 8px; text-align: left; margin: 20px 0; font-size: 1.1rem;
+        }
+        .problem .loss strong { color: #f87171; }
+        .solution { padding: 60px 20px; background: #111535; }
+        .solution h2 { text-align: center; font-size: 1.8rem; margin-bottom: 40px; color: #818cf8; }
+        .features {
+            max-width: 800px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
+        }
+        .feature {
+            background: #1a1f4e; border-radius: 12px; padding: 25px; text-align: center;
+            border: 1px solid rgba(99,102,241,0.2); transition: transform 0.2s;
+        }
+        .feature:hover { transform: translateY(-4px); }
+        .feature .icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .feature h3 { color: #c084fc; margin-bottom: 8px; font-size: 1.1rem; }
+        .feature p { font-size: 0.95rem; color: #a5b4fc; }
+        .how { padding: 60px 20px; max-width: 700px; margin: 0 auto; }
+        .how h2 { text-align: center; font-size: 1.8rem; margin-bottom: 40px; color: #818cf8; }
+        .step { display: flex; align-items: flex-start; margin-bottom: 25px; }
+        .step .num {
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            color: #0a0e27; width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; margin-right: 20px; flex-shrink: 0;
+        }
+        .step .text h3 { color: #c084fc; margin-bottom: 5px; }
+        .step .text p { color: #a5b4fc; }
+        .demo { padding: 60px 20px; text-align: center; background: #111535; }
+        .demo h2 { font-size: 1.8rem; margin-bottom: 15px; color: #818cf8; }
+        .demo p { color: #a5b4fc; margin-bottom: 30px; }
+        .demo-script {
+            max-width: 600px; margin: 0 auto; background: #1a1f4e;
+            border-radius: 12px; padding: 30px; text-align: left;
+        }
+        .demo-line { margin-bottom: 15px; }
+        .demo-line .ai { color: #c084fc; font-weight: 600; }
+        .demo-line .cust { color: #818cf8; font-weight: 600; }
+        .demo-line .msg { color: #e8eaf6; margin-top: 3px; }
+        .pricing { padding: 60px 20px; text-align: center; max-width: 600px; margin: 0 auto; }
+        .pricing h2 { font-size: 1.8rem; margin-bottom: 30px; color: #818cf8; }
+        .price-card {
+            background: #1a1f4e; border-radius: 16px; padding: 40px; border: 2px solid rgba(99,102,241,0.3);
+        }
+        .price-card .setup { font-size: 3rem; font-weight: 800; color: #c084fc; }
+        .price-card .setup span { font-size: 1.2rem; color: #a5b4fc; font-weight: 400; }
+        .price-card .monthly { font-size: 1.5rem; color: #818cf8; margin-top: 10px; }
+        .price-card ul { list-style: none; margin: 25px 0; text-align: left; }
+        .price-card li { padding: 8px 0; color: #e8eaf6; }
+        .price-card li::before { content: '✓ '; color: #4ade80; font-weight: bold; }
+        .cta { padding: 60px 20px; text-align: center; background: linear-gradient(135deg, #1a1f4e, #0a0e27); }
+        .cta h2 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
+        .cta p { color: #a5b4fc; margin-bottom: 30px; }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            color: #0a0e27; padding: 18px 40px; border-radius: 50px;
+            text-decoration: none; font-weight: 700; font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-button:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(99,102,241,0.4); }
+        .contact-info { margin-top: 25px; color: #a5b4fc; font-size: 0.95rem; }
+        .contact-info a { color: #c084fc; text-decoration: none; }
+        .payment {
+            padding: 40px 20px; text-align: center; background: #0a0e27;
+            border-top: 1px solid rgba(99,102,241,0.1);
+        }
+        .payment h3 { color: #818cf8; margin-bottom: 15px; }
+        .payment-methods {
+            max-width: 500px; margin: 0 auto;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+        }
+        .pay-badge {
+            background: #1a1f4e; padding: 10px 20px; border-radius: 8px;
+            font-size: 0.85rem; border: 1px solid rgba(99,102,241,0.2);
+        }
+        footer {
+            text-align: center; padding: 30px 20px; color: #555;
+            font-size: 0.85rem; border-top: 1px solid rgba(99,102,241,0.1);
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Never Miss a Customer Call Again</h1>
+            <p>24/7 AI voice assistant that answers every call, books appointments, and sends you the lead details — even at 3 AM.</p>
+            <div class="stat">📞 <strong>Answers every call</strong> in &lt;1 second</div>
+            <div class="stat">📅 <strong>Books appointments</strong> directly to your calendar</div>
+            <div class="stat">🌙 <strong>Works 24/7</strong> — even when you're on a job</div>
+        </div>
+    </section>
+
+    <section class="problem">
+        <h2>Every Missed Call Is Lost Money</h2>
+        <div class="loss">
+            <strong>The scenario:</strong> A customer has a burst pipe at 2 AM. They call you. You're asleep. They call the next plumber.<br><br>
+            <strong>That's a $500–$2,000 job gone.</strong> How many times has this happened to you this month?
+        </div>
+        <p>Research shows <strong>62% of calls to small businesses go unanswered</strong>. Each one is a customer who went to your competitor.</p>
+    </section>
+
+    <section class="solution">
+        <h2>Meet Your AI Assistant</h2>
+        <div class="features">
+            <div class="feature"><div class="icon">📞</div><h3>Answers 24/7</h3><p>Every call answered instantly — day, night, weekends, holidays.</p></div>
+            <div class="feature"><div class="icon">🗣️</div><h3>Perfect English</h3><p>Sounds natural and professional. Customers don't know it's AI.</p></div>
+            <div class="feature"><div class="icon">📅</div><h3>Books Appointments</h3><p>Adds jobs directly to your calendar. Texts you the details.</p></div>
+            <div class="feature"><div class="icon">✅</div><h3>Qualifies Leads</h3><p>Asks about the problem, budget, urgency. You only get serious calls.</p></div>
+            <div class="feature"><div class="icon">💬</div><h3>Answers Questions</h3><p>Hours, pricing, services, coverage area — handled automatically.</p></div>
+            <div class="feature"><div class="icon">📱</div><h3>SMS Follow-up</h3><p>Texts customers confirmations, reminders, and payment links.</p></div>
+        </div>
+    </section>
+
+    <section class="how">
+        <h2>How It Works</h2>
+        <div class="step"><div class="num">1</div><div class="text"><h3>Customer calls your number</h3><p>The AI answers instantly with your business name and a friendly greeting.</p></div></div>
+        <div class="step"><div class="num">2</div><div class="text"><h3>AI asks what they need</h3><p>It listens, asks the right questions, and figures out if it's a real lead.</p></div></div>
+        <div class="step"><div class="num">3</div><div class="text"><h3>AI books the appointment</h3><p>It checks your calendar and books a time that works for both of you.</p></div></div>
+        <div class="step"><div class="num">4</div><div class="text"><h3>You get a text with the details</h3><p>Customer name, phone, the problem, the appointment time. You just show up.</p></div></div>
+    </section>
+
+    <section class="demo">
+        <h2>Hear a Sample Call</h2>
+        <p>This is exactly how the AI sounds when a customer calls:</p>
+        <div class="demo-script">
+            <div class="demo-line"><div class="ai">🤖 AI:</div><div class="msg">"Hi, thanks for calling NYC Plumbing Pros! How can I help you today?"</div></div>
+            <div class="demo-line"><div class="cust">👤 Customer:</div><div class="msg">"Yeah, I've got a leak under my kitchen sink. How soon can someone come out?"</div></div>
+            <div class="demo-line"><div class="ai">🤖 AI:</div><div class="msg">"I'm sorry to hear about the leak! I can get someone out to you today. What's your address?"</div></div>
+            <div class="demo-line"><div class="cust">👤 Customer:</div><div class="msg">"123 Oak Street, Brooklyn."</div></div>
+            <div class="demo-line"><div class="ai">🤖 AI:</div><div class="msg">"Got it. I have a slot at 2 PM today. Does that work for you?"</div></div>
+            <div class="demo-line"><div class="cust">👤 Customer:</div><div class="msg">"Yes, perfect."</div></div>
+            <div class="demo-line"><div class="ai">🤖 AI:</div><div class="msg">"Great! I've booked you for 2 PM today at 123 Oak Street. Our plumber will text you when they're on the way. Your name and phone number, please?"</div></div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <h2>Simple, Honest Pricing</h2>
+        <div class="price-card">
+            <div class="setup">$500 <span>one-time setup</span></div>
+            <div class="monthly">+ $200/month</div>
+            <ul>
+                <li>AI voice assistant set up for your business</li>
+                <li>Answers all calls 24/7</li>
+                <li>Books appointments to your calendar</li>
+                <li>SMS follow-ups with customers</li>
+                <li>Call recordings and transcripts</li>
+                <li>Lead details texted to you instantly</li>
+                <li>No long-term contract — cancel anytime</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Ready to Never Miss a Call Again?</h2>
+        <p>Get your AI assistant set up this week. Contact us below — we reply fast.</p>
+        <a href="mailto:ihakizimana11@gmail.com?subject=I%20want%20the%20AI%20assistant" class="cta-button">Get Started →</a>
+        <div class="contact-info">
+            📧 <a href="mailto:ihakizimana11@gmail.com">ihakizimana11@gmail.com</a><br>
+            💬 <a href="https://wa.me/971505852438?text=Hi%2C%20I%27m%20interested%20in%20the%20AI%20voice%20assistant">WhatsApp: +971 50 585 2438</a><br>
+            📞 Phone: +971 50 258 4233
+        </div>
+    </section>
+
+    <section class="payment">
+        <h3>Payment Methods Accepted</h3>
+        <div class="payment-methods">
+            <div class="pay-badge">💳 PayPal</div>
+            <div class="pay-badge">🪙 USDT (BEP20)</div>
+            <div class="pay-badge">₿ BTC (BEP20)</div>
+            <div class="pay-badge">⟠ ETH (ERC20)</div>
+        </div>
+    </section>
+
+    <footer>AI Pro Assist — 24/7 AI Voice Assistant for Small Businesses<br>© 2026 AI Pro Assist. All rights reserved.</footer>
+</body>
+</html>
