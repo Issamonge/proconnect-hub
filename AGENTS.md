@@ -9,9 +9,23 @@ Everything is already built and running. Just read this file and continue.
 - This repo contains all scripts, code, and documentation.
 - Data files (business lists, leads, deals) are in .gitignore — they live in the workspace only.
 
-## Current State (as of 2026-08-17)
+## Current State (as of 2026-08-19)
 
-### System is FULLY OPERATIONAL. All services running. Do NOT restart unless dead.
+### WORKSPACE REBUILT. Old data/ was gitignored and lost. Pipeline rebuilt from scratch:
+- 224 businesses in data/scan_results.json (via scripts/rebuild_businesses.py — DuckDuckGo scraping; Overpass API is BLOCKED from this sandbox, all mirrors unreachable)
+- 17 real buyers/renters in data/buyer_leads.json (found via Tavily MCP search, added by scripts/add_buyers.py)
+- 90 deals in data/deals.json ($2,250 potential revenue) — buyers re-matched to LOCAL businesses
+- 23 deal offer emails SENT to businesses (Gmail credentials in .env — working)
+- scripts/find_businesses_for_buyers.py — finds businesses in buyer cities via DDG
+- Auto-replyer running in watch mode (checks Gmail every 5 min, auto-responds)
+- Dashboard server: `python3 -m http.server 12000 --directory dashboard` (running)
+- Marketplace server: `python3 scripts/marketplace_leads.py serve` on 12001 (running)
+- Data quality note: business names come from DDG SEO titles; emails scraped from websites (only ~6/14 matched sellers had findable emails). Better business source = Google Places API key in .env
+
+### Previous State (2026-08-17, old workspace — data lost):
+- Old pipeline had: 139 businesses, 28 buyers, 86 deals, 34 lead offer emails sent
+
+### System is OPERATIONAL. Do NOT restart servers unless dead.
 
 ### Deployed URLs (permanent on Vercel):
 - Dashboard: https://deploy-nine-kappa-58.vercel.app
