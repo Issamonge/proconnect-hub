@@ -1,5 +1,18 @@
 # AI Deal-Making System - Search, Call & Close
 
+## NEW IN THIS UPGRADE (2026-08-22): Global multi-source architecture
+`core/` + `sources/` + `config/` introduce the unified pipeline:
+- `python3 -m core.pipeline discover --niches plumbing roofing --countries US GB`
+- `python3 -m core.pipeline verify-businesses`
+- `python3 -m core.pipeline match`
+- `python3 -m core.pipeline outreach` (DRY-RUN ONLY)
+- `python3 scripts/optin_server.py 12001 &` — opt-in funnel with consent capture
+
+All outreach is DRY-RUN until you approve with "APPROVE SEND".
+Old scripts below still work in sandbox.
+
+---
+
 A complete system that searches the internet for leads, has an AI voice agent call them in English, qualifies them, and closes deals — without you ever speaking English.
 
 ## What This System Does
