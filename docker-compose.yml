@@ -1,0 +1,98 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: proconnect
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: proconnect
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U proconnect"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    command: redis-server --appendonly yes
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  api:
+    build: .
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    environment:
+      DATABASE_URL: postgresql://proconnect:${DB_PASSWORD}@postgres:5432/proconnect
+      DRY_RUN: "true"
+      OUTREACH_ENABLED: "false"
+      AUTO_REPLY_ENABLED: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  worker:
+    build: .
+    command: python3 -m workers.runner match
+    environment:
+      DATABASE_URL: postgresql://proconnect:${DB_PASSWORD}@postgres:5432/proconnect
+      DRY_RUN: "true"
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  scheduler:
+    build: .
+    command: python3 -m workers.scheduler
+    environment:
+      DATABASE_URL: postgresql://proconnect:${DB_PASSWORD}@postgres:5432/proconnect
+      DRY_RUN: "true"
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  dashboard:
+    build: .
+    command: python3 scripts/dashboard_v2.py
+    environment:
+      DATABASE_URL: postgresql://proconnect:${DB_PASSWORD}@postgres:5432/proconnect
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./deploy/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./dashboard:/usr/share/nginx/html:ro
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
