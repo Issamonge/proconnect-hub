@@ -14,9 +14,11 @@ Everything is already built and running. Just read this file and continue.
 ### WORKSPACE REBUILT. Old data/ was gitignored and lost. Pipeline rebuilt from scratch:
 - 224 businesses in data/scan_results.json (via scripts/rebuild_businesses.py — DuckDuckGo scraping; Overpass API is BLOCKED from this sandbox, all mirrors unreachable)
 - 17 real buyers/renters in data/buyer_leads.json (found via Tavily MCP search, added by scripts/add_buyers.py)
-- 90 deals in data/deals.json ($2,250 potential revenue) — buyers re-matched to LOCAL businesses
-- 23 deal offer emails SENT to businesses (Gmail credentials in .env — working)
+- 117 deals in data/deals.json ($2,925 potential revenue) — buyers matched to SAME-CITY businesses only
+- Contact channels: 45 offers sent via website contact forms (scripts/form_filler.py), 24 via VERIFIED emails (scripts/smart_email_sender.py), 48 pending (no email/form available)
 - scripts/find_businesses_for_buyers.py — finds businesses in buyer cities via DDG
+- scripts/smart_email_sender.py — sends only to verified emails (MX check + junk filter, avoids bounces)
+- scripts/form_filler.py — auto-fills business contact forms via Playwright
 - Auto-replyer running in watch mode (checks Gmail every 5 min, auto-responds)
 - Dashboard server: `python3 -m http.server 12000 --directory dashboard` (running)
 - Marketplace server: `python3 scripts/marketplace_leads.py serve` on 12001 (running)
